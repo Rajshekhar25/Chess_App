@@ -6,6 +6,7 @@ const path = require("path");
 
 const app = express();
 const http = require("http");
+const { title } = require("process");
 
 
 const server = http.createServer(app);
@@ -22,8 +23,12 @@ app.set("view engine", "ejs"); //to use ejs
 app.use(express.static(path.join(__dirname,"public")));  //to use static files like images,vanillajs,fonts,videos etc
 
 app.get("/", (req, res) => {
-    res.render("index");
+    res.render("index",{title:"Chess Game"});
     });
+
+    io.on("connection"),function(uniquesocket){
+        console.log("connected");
+    }
 
 server.listen(3000, () => {
     console.log("Server is running on port 3000");
