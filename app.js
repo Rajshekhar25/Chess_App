@@ -29,7 +29,9 @@ app.get("/", (req, res) => {
     io.on("connection", function(uniquesocket){
         console.log("connected");
 
-        uniquesocket.on("disconnect")
+        uniquesocket.on("disconnect",function(){
+            console.log("disconnected");
+        });
     });
 
 server.listen(3000, () => {
