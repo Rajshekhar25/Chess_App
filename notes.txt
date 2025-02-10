@@ -1,0 +1,3 @@
+Socket.io must be set up on both frontend and backend.
+
+for frontend use socket.io cdn
