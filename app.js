@@ -51,10 +51,37 @@ app.get("/", (req, res) => {
                     delete players.black;}
 
                 });
+
+                uniquesocket.on("move", (move)=>{
+                try{
+                    if(chess.turn()==='w' && uniquesocket.id!==players.white) return;
+                    if(chess.turn()==='b' && uniquesocket.id!==players.black) return;
+
+                    //making sure that only the correct player makes the move
+
+                    const result=chess.move(move);
+                    if(result){                //means if the move is correct
+                    currentPlayer=chess.turn();
+                    io.emit("move",move);     //io.emit means send this move to everyone inlcuding the spectators,uniquesocket.emit means send this move to only the person who made the move
+                    io.emit("boardState",chess.fen());
+                    }
+
+                    else{
+                        console.log("Invalid move: ", move);
+                        uniquesocket.emit("invalidMove",move);
+                    }
+
+                }catch (err){
+                    console.log(err);
+                   uniquesocket.emit("Invalid move : ", move);
+                
+                }
+
+                
+            
             });
-
-
-
+           
+        });
 server.listen(3000, () => {
     console.log("Server is running on port 3000");
 });
