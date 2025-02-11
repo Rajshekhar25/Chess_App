@@ -16,7 +16,7 @@ const io=socket(server);
 const chess=new Chess();
 
 let players={};
-let currentPlayer="W"
+let currentPlayer="w"
 
 app.set("view engine", "ejs"); //to use ejs
 
@@ -29,10 +29,31 @@ app.get("/", (req, res) => {
     io.on("connection", function(uniquesocket){
         console.log("connected");
 
-        uniquesocket.on("disconnect",function(){
-            console.log("disconnected");
-        });
-    });
+        if(!players.white){
+            players.white=uniquesocket.id;
+            uniquesocket.emit("playerRole","w"); //if white player is not present then the connected person is assigned white
+            }
+
+            else if(!players.black){
+                players.black=uniquesocket.id;
+                uniquesocket.emit("playerRole","b");
+            }
+
+            else{
+                uniquesocket.emit("spectatorRole");
+            }
+
+            uniquesocket.on("disconnect", function(){
+             
+                if(uniquesocket.id===players.white){
+                    delete players.white;}
+                else if(uniquesocket.id===players.black){
+                    delete players.black;}
+
+                });
+            });
+
+
 
 server.listen(3000, () => {
     console.log("Server is running on port 3000");
