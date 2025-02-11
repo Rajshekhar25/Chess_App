@@ -22,7 +22,20 @@
             if(square){
                 const pieceElement = document.createElement("div");
                 pieceElement.classList.add("piece", square.color === 'w'? "white" : "black");
+
+                pieceElement.innerText="";
+                pieceElement.draggable=playerRole===square.color;
+
+                pieceElement.addEventListener("dragstart", ()=>{
+
+                    if(pieceElememt.draggable){
+
+                    }
+
+
+                });
             }
+
       
         
       
