@@ -29,6 +29,8 @@
                 pieceElement.addEventListener("dragstart", ()=>{
 
                     if(pieceElememt.draggable){
+                        draggedPiece=pieceElement;
+                        sourceSquare={row:rowindex, col:squareindex};
 
                     }
 
