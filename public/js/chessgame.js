@@ -70,12 +70,18 @@ const renderBoard = () => {
 
     });
 
+   if(playerRole==='b'){
+    boardElement.classList.add("flipped");
+   }
+   else{
+    boardElement.classList.remove("flipped");
+   }
 
 
 };
 
 
-const handleMove = () => { 
+const handleMove = (source,target) => { 
     const move = {
         from: `${String.fromCharCode(97 + source.col)}${8 - source.row}`,
         to: `${String.fromCharCode(97 + target.col)}${8 - target.row}`,
